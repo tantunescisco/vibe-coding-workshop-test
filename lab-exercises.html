@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Vibe Coding Workshop - Lab Exercises</title>
+    <style>
+        /* ===================================
+           GLOBAL STYLES
+           Reset and base body styling
+           =================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* ===================================
+           MAIN CONTAINER
+           Two-column grid layout: sidebar + content
+           =================================== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 350px 1fr; /* Fixed 350px sidebar, flexible content area */
+            gap: 20px;
+            min-height: 100vh;
+        }
+
+        /* ===================================
+           LAB LIST SIDEBAR
+           Left sidebar with lab navigation
+           =================================== */
+        /* Lab List Sidebar */
+        .lab-list {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+
+        .lab-list h1 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: #667eea;
+        }
+
+        .lab-list .subtitle {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        /* Individual lab items in the sidebar */
+        .lab-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        /* Hover effect for lab items */
+        .lab-item:hover {
+            background: #f8f9ff;
+            border-color: #667eea;
+            transform: translateX(5px); /* Slight slide animation */
+        }
+
+        /* Active state for currently selected lab */
+        .lab-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .lab-item .lab-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .home-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .lab-item .lab-title {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .lab-item .lab-meta {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Lab Content */
+        .lab-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+
+        /* Heading styles for lab content */
+        .lab-content h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .lab-content h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lab-content h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Badge styling for lab type and audience */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .badge.type {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge.audience {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .lab-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .lab-content li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .prompt-box {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Styled box for learning outcomes */
+        .learning-outcome {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        /* Welcome screen displayed on page load */
+        .welcome-screen {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .welcome-screen h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .welcome-screen .emoji {
+            font-size: 4rem;
+            margin-bottom: 30px;
+        }
+
+        /* Icon styling for section headers */
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+        }
+
+        /* ===================================
+           RESPONSIVE DESIGN
+           Mobile and tablet adjustments
+           =================================== */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .lab-list {
+                position: static;
+            }
+
+            .lab-content {
+                max-height: none;
+            }
+        }
+
+        /* ===================================
+           CUSTOM SCROLLBAR
+           Styled scrollbar for content area
+           =================================== */
+        .lab-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lab-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .lab-content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .lab-content::-webkit-scrollbar-thumb:hover {
+            background: #764ba2;
+        }
+
+        /* ===================================
+           WORKSHOP OVERVIEW TABLE
+           Table displaying all labs with details
+           =================================== */
+        .workshop-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .workshop-table thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .workshop-table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .workshop-table td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .workshop-table tbody tr {
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .workshop-table tbody tr:hover {
+            background: #f8f9ff;
+        }
+
+        .workshop-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Lab name styling in table */
+        .table-lab-name {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        /* Badge styling for table cells */
+        .table-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Color-coded badges for different lab types */
+        .table-badge.game {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .table-badge.productivity {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .table-badge.learning {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+    </style>
+</head>
+<body>
+    <!-- ===================================
+         MAIN CONTAINER
+         Contains sidebar and content area
+         =================================== -->
+    <div class="container">
+        <!-- ===================================
+             LAB LIST SIDEBAR
+             Navigation for all lab exercises
+             =================================== -->
+        <div class="lab-list">
+            <h1>🎯 Vibe Coding Workshop</h1>
+            <div class="subtitle">GitHub Copilot × Web Browser Projects</div>
+            
+            <!-- Home button to return to overview page -->
+            <div class="home-button" onclick="showWelcome()">🏠 Workshop Overview</div>
+            
+            <!-- Lab 1: Habit Tracker -->
+            <div class="lab-item" data-lab="1">
+                <div class="lab-number">✅ Lab 1</div>
+                <div class="lab-title">Personal Habit Tracker</div>
+                <div class="lab-meta">Productivity Tool • All Levels</div>
+            </div>
+
+            <!-- Lab 2: Tic-Tac-Toe Game -->
+            <div class="lab-item" data-lab="2">
+                <div class="lab-number">⭕ Lab 2</div>
+                <div class="lab-title">Tic-Tac-Toe Game</div>
+                <div class="lab-meta">Browser Game • All Levels</div>
+            </div>
+
+            <!-- Lab 3: Memory Match Game -->
+            <div class="lab-item" data-lab="3">
+                <div class="lab-number">🃏 Lab 3</div>
+                <div class="lab-title">Emoji Memory Match Game</div>
+                <div class="lab-meta">Browser Game • All Levels</div>
+            </div>
+
+            <!-- Lab 4: Sudoku Game -->
+            <div class="lab-item" data-lab="4">
+                <div class="lab-number">🧩 Lab 4</div>
+                <div class="lab-title">Sudoku Game</div>
+                <div class="lab-meta">Browser Game • Mixed</div>
+            </div>
+
+            <!-- Lab 5: Quiz Builder -->
+            <div class="lab-item" data-lab="5">
+                <div class="lab-number">❓ Lab 5</div>
+                <div class="lab-title">Interactive Quiz Builder</div>
+                <div class="lab-meta">Learning Tool • All Levels</div>
+            </div>
+
+            <!-- Lab 6: Kanban Board -->
+            <div class="lab-item" data-lab="6">
+                <div class="lab-number">📋 Lab 6</div>
+                <div class="lab-title">Mini Kanban Board</div>
+                <div class="lab-meta">Productivity Tool • All Levels</div>
+            </div>
+        </div>
+
+        <!-- ===================================
+             LAB CONTENT AREA
+             Displays selected lab details or welcome screen
+             =================================== -->
+        <div class="lab-content" id="labContent">
+            <!-- Initial welcome screen (replaced by JavaScript on load) -->
+            <div class="welcome-screen">
+                <div class="emoji">💻✨</div>
+                <h2>Welcome to the Vibe Coding Workshop!</h2>
+                <p>Select a lab exercise from the left to get started.</p>
+                <p style="font-size: 1rem; color: #888;">Each lab takes approximately <strong>~20 minutes</strong> and runs entirely in the web browser.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ===================================
+           LAB DATA OBJECT
+           Contains all lab details and content
+           =================================== */
+        const labs = {
+            1: {
+                title: "Lab 1 — Personal Habit Tracker",
+                type: "Productivity Tool",
+                audience: "All Levels",
+                goal: "Build a daily habit tracker where users can add habits, check them off, and see a simple progress bar.",
+                whatToBuild: [
+                    "Input field to add new habits",
+                    "Checkbox list to mark habits as done",
+                    "Visual progress bar showing daily completion %",
+                    'A "Reset Day" button'
+                ],
+                prompts: [
+                    "Create an HTML page with a habit tracker that lets me add habits and check them off",
+                    "Add a progress bar that updates automatically as habits are checked",
+                    "Style this with a clean, modern look using CSS"
+                ],
+                outcome: "Understand how Copilot generates functional UI components from plain English descriptions."
+            },
+            2: {
+                title: "Lab 2 — Tic-Tac-Toe Game",
+                type: "Browser Game",
+                audience: "All Levels",
+                star: true,
+                goal: "Build a fully functional Tic-Tac-Toe game playable in the browser, with two-player mode and an optional simple AI opponent.",
+                whatToBuild: [
+                    "3×3 interactive game grid",
+                    "Two-player turn-based logic (X and O)",
+                    "Win detection and draw detection",
+                    "Score tracker across multiple rounds",
+                    "Optional: Single-player mode with a basic AI opponent"
+                ],
+                prompts: [
+                    "Create a Tic-Tac-Toe game in HTML and JavaScript with a 3x3 clickable grid for two players",
+                    "Add win detection logic that highlights the winning combination and announces the winner",
+                    "Add a scoreboard that tracks wins for X, wins for O, and draws across rounds",
+                    "Add a simple AI opponent that plays as O using random available moves"
+                ],
+                outcome: "See how Copilot handles turn-based game logic, win condition algorithms, and optional AI logic from conversational prompts."
+            },
+            3: {
+                title: "Lab 3 — Emoji Memory Match Game",
+                type: "Browser Game",
+                audience: "All Levels",
+                goal: "Build a classic memory card flip game using emojis as card faces with a move counter and timer.",
+                whatToBuild: [
+                    "4×4 grid of face-down emoji cards",
+                    "Flip animation on click",
+                    "Match detection logic",
+                    "Move counter + countdown timer",
+                    "Win screen with score"
+                ],
+                prompts: [
+                    "Create a memory card matching game with emojis in a 4x4 grid using HTML and JavaScript",
+                    "Add a flip animation using CSS transitions",
+                    "Add a move counter and a 60-second countdown timer"
+                ],
+                outcome: "Experience how Copilot scaffolds game logic, state management, and animations with minimal manual coding."
+            },
+            4: {
+                title: "Lab 4 — Sudoku Game",
+                type: "Browser Game",
+                audience: "Mixed",
+                star: true,
+                goal: "Build a playable Sudoku game in the browser with a pre-generated puzzle, input validation, and helper features.",
+                whatToBuild: [
+                    "9×9 Sudoku grid with pre-filled puzzle numbers",
+                    "Input cells for the player to fill in missing numbers",
+                    "Real-time validation highlighting (correct ✅ / incorrect ❌)",
+                    'A "Check Solution" button',
+                    'A "Show Hint" button that reveals one correct cell',
+                    "Timer to track how long the puzzle takes"
+                ],
+                prompts: [
+                    "Build a Sudoku game in HTML and JavaScript with a 9x9 grid and a hardcoded starter puzzle",
+                    "Highlight cells in red when the player enters an incorrect number and green when correct",
+                    "Add a Check Solution button that validates the entire board and shows a success message",
+                    "Add a hint button that reveals one empty cell with the correct answer",
+                    "Add a timer that starts when the first cell is filled and stops when the puzzle is solved"
+                ],
+                outcome: "Demonstrate how Copilot tackles grid-based logic, input validation, and multi-feature interactivity — skills that would take hours to research and write manually."
+            },
+            5: {
+                title: "Lab 5 — Interactive Quiz Builder",
+                type: "Learning Tool",
+                audience: "All Levels",
+                goal: "Build a quiz app where participants can define their own questions, run the quiz, and see a results summary.",
+                whatToBuild: [
+                    "Question creation form (question + 4 options + correct answer)",
+                    "Quiz playback mode with one question at a time",
+                    "Score tracker and progress indicator",
+                    "End screen with review of wrong answers"
+                ],
+                prompts: [
+                    "Create a quiz app where I can add my own questions with 4 multiple choice answers",
+                    "Show one question at a time with a next button and track the score",
+                    "At the end, show which questions were answered incorrectly with the correct answers"
+                ],
+                outcome: "Show how Copilot manages multi-step application state and dynamic content generation."
+            },
+            6: {
+                title: "Lab 6 — Mini Kanban Board",
+                type: "Productivity Tool",
+                audience: "All Levels",
+                goal: "Build a drag-and-drop Kanban board with three columns (To Do, In Progress, Done) to manage tasks visually.",
+                whatToBuild: [
+                    "Three-column board layout",
+                    "Add task cards with a title and priority label",
+                    "Drag-and-drop cards between columns",
+                    "Delete task button",
+                    "Task count badge per column"
+                ],
+                prompts: [
+                    "Build a Kanban board with three columns: To Do, In Progress, and Done using HTML and JavaScript",
+                    "Make the task cards draggable between columns using the HTML drag-and-drop API",
+                    "Add a priority badge (High, Medium, Low) and a task counter per column"
+                ],
+                outcome: "Demonstrate how Copilot handles complex browser APIs like drag-and-drop that are notoriously tricky to write manually."
+            }
+        };
+
+        /* ===================================
+           DISPLAY LAB FUNCTION
+           Shows the selected lab's details in the content area
+           =================================== */
+        function displayLab(labNumber) {
+            const lab = labs[labNumber];
+            const content = document.getElementById('labContent');
+            
+            // Build HTML for the selected lab
+            content.innerHTML = `
+                <h2>🧪 ${lab.title}</h2>
+                <div style="margin-bottom: 30px;">
+                    <span class="badge type">${lab.type}</span>
+                    <span class="badge audience">${lab.audience}</span>
+                </div>
+
+                <h3><span class="icon">🎯</span> Goal</h3>
+                <p>${lab.goal}</p>
+
+                <h3><span class="icon">🛠️</span> What Participants Will Build</h3>
+                <ul>
+                    ${lab.whatToBuild.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+
+                <h3><span class="icon">💡</span> Copilot Prompts to Use</h3>
+                ${lab.prompts.map(prompt => `<div class="prompt-box">"${prompt}"</div>`).join('')}
+
+                <h3><span class="icon">🏁</span> Learning Outcome</h3>
+                <div class="learning-outcome">
+                    ${lab.outcome}
+                </div>
+            `;
+
+            // Update active state in sidebar
+            document.querySelectorAll('.lab-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-lab="${labNumber}"]`).classList.add('active');
+
+            // Scroll to top of content
+            content.scrollTop = 0;
+        }
+
+        /* ===================================
+           SHOW WELCOME FUNCTION
+           Displays workshop overview with table of all labs
+           =================================== */
+        function showWelcome() {
+            const content = document.getElementById('labContent');
+            // Build HTML for welcome screen with overview table
+            content.innerHTML = `
+                <div class="welcome-screen">
+                    <div class="emoji">💻✨</div>
+                    <h2>Welcome to the Vibe Coding Workshop!</h2>
+                    <p>Select a lab exercise from the left to get started.</p>
+                    <p style="font-size: 1rem; color: #888;">Each lab takes approximately <strong>~20 minutes</strong> and runs entirely in the web browser.</p>
+                </div>
+
+                <h3 style="margin-top: 40px; margin-bottom: 20px; color: #667eea;">📋 Workshop Labs Overview</h3>
+                <table class="workshop-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">#</th>
+                            <th style="width: 35%;">Lab</th>
+                            <th style="width: 20%;">Type</th>
+                            <th style="width: 15%;">Audience</th>
+                            <th style="width: 25%;">Key Copilot Skill Shown</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr onclick="displayLab(1)">
+                            <td>1</td>
+                            <td><span class="table-lab-name">✅ Personal Habit Tracker</span></td>
+                            <td><span class="table-badge productivity">Productivity</span></td>
+                            <td>All Levels</td>
+                            <td>UI generation from plain English</td>
+                        </tr>
+                        <tr onclick="displayLab(2)">
+                            <td>2</td>
+                            <td><span class="table-lab-name">⭕ Tic-Tac-Toe Game</span></td>
+                            <td><span class="table-badge game">Game</span></td>
+                            <td>All Levels</td>
+                            <td>Turn-based logic & AI opponent</td>
+                        </tr>
+                        <tr onclick="displayLab(3)">
+                            <td>3</td>
+                            <td><span class="table-lab-name">🃏 Emoji Memory Match Game</span></td>
+                            <td><span class="table-badge game">Game</span></td>
+                            <td>All Levels</td>
+                            <td>Game state & animations</td>
+                        </tr>
+                        <tr onclick="displayLab(4)">
+                            <td>4</td>
+                            <td><span class="table-lab-name">🧩 Sudoku Game</span></td>
+                            <td><span class="table-badge game">Game</span></td>
+                            <td>Mixed</td>
+                            <td>Grid logic & input validation</td>
+                        </tr>
+                        <tr onclick="displayLab(5)">
+                            <td>5</td>
+                            <td><span class="table-lab-name">❓ Interactive Quiz Builder</span></td>
+                            <td><span class="table-badge learning">Learning Tool</span></td>
+                            <td>All Levels</td>
+                            <td>Multi-step state management</td>
+                        </tr>
+                        <tr onclick="displayLab(6)">
+                            <td>6</td>
+                            <td><span class="table-lab-name">📋 Mini Kanban Board</span></td>
+                            <td><span class="table-badge productivity">Productivity</span></td>
+                            <td>All Levels</td>
+                            <td>Complex browser APIs</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 20px; margin: 30px 0; border-radius: 4px;">
+                    <strong>💬 Facilitator Tip:</strong> Encourage participants to describe features in their own words — the more natural the prompt, the better the demonstration of Copilot's power. Mistakes and iterations are part of the learning!
+                </div>
+            `;
+            
+            // Remove active state from all labs
+            document.querySelectorAll('.lab-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Scroll to top
+            content.scrollTop = 0;
+        }
+
+        /* ===================================
+           EVENT HANDLERS
+           Set up click handlers for lab items
+           =================================== */
+        // Add click handlers to lab items
+        document.querySelectorAll('.lab-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const labNumber = parseInt(this.getAttribute('data-lab'));
+                displayLab(labNumber);
+            });
+        });
+
+        /* ===================================
+           PAGE INITIALIZATION
+           Show workshop overview when page loads
+           =================================== */
+        // Show workshop overview on page load
+        showWelcome();
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+# 🎯 Vibe Coding Workshop — Lab Exercises
+### GitHub Copilot × Web Browser Projects 
+
+---
+
+## Workshop Overview
+
+Each lab is designed to take **~10 minutes**, runs entirely in the **web browser**, and demonstrates how GitHub Copilot accelerates development for both technical and non-technical participants. All examples use **HTML, CSS, and JavaScript** — no installation required beyond a code editor with Copilot enabled.
+
+---
+
+## 🧪 Lab 1 — Personal Habit Tracker
+**Type:** Productivity Tool | **Audience:** All Levels
+
+### 🎯 Goal
+Build a daily habit tracker where users can add habits, check them off, and see a simple progress bar.
+
+### 🛠️ What Participants Will Build
+- Input field to add new habits
+- Checkbox list to mark habits as done
+- Visual progress bar showing daily completion %
+- A "Reset Day" button
+
+### 💡 Copilot Prompts to Use
+- *"Create an HTML page with a habit tracker that lets me add habits and check them off"*
+- *"Add a progress bar that updates automatically as habits are checked"*
+- *"Style this with a clean, modern look using CSS"*
+
+### 🏁 Learning Outcome
+Understand how Copilot generates functional UI components from plain English descriptions.
+
+---
+
+## 🧪 Lab 2 — Tic-Tac-Toe Game
+**Type:** Browser Game | **Audience:** All Levels
+
+### 🎯 Goal
+Build a fully functional Tic-Tac-Toe game playable in the browser, with two-player mode and an optional simple AI opponent.
+
+### 🛠️ What Participants Will Build
+- 3×3 interactive game grid
+- Two-player turn-based logic (X and O)
+- Win detection and draw detection
+- Score tracker across multiple rounds
+- Optional: Single-player mode with a basic AI opponent
+
+### 💡 Copilot Prompts to Use
+- *"Create a Tic-Tac-Toe game in HTML and JavaScript with a 3x3 clickable grid for two players"*
+- *"Add win detection logic that highlights the winning combination and announces the winner"*
+- *"Add a scoreboard that tracks wins for X, wins for O, and draws across rounds"*
+- *"Add a simple AI opponent that plays as O using random available moves"*
+
+### 🏁 Learning Outcome
+See how Copilot handles turn-based game logic, win condition algorithms, and optional AI logic from conversational prompts.
+
+---
+
+## 🧪 Lab 3 — Emoji Memory Match Game
+**Type:** Browser Game | **Audience:** All Levels
+
+### 🎯 Goal
+Build a classic memory card flip game using emojis as card faces with a move counter and timer.
+
+### 🛠️ What Participants Will Build
+- 4×4 grid of face-down emoji cards
+- Flip animation on click
+- Match detection logic
+- Move counter + countdown timer
+- Win screen with score
+
+### 💡 Copilot Prompts to Use
+- *"Create a memory card matching game with emojis in a 4x4 grid using HTML and JavaScript"*
+- *"Add a flip animation using CSS transitions"*
+- *"Add a move counter and a 60-second countdown timer"*
+
+### 🏁 Learning Outcome
+Experience how Copilot scaffolds game logic, state management, and animations with minimal manual coding.
+
+---
+
+## 🧪 Lab 4 — Sudoku Game
+**Type:** Browser Game | **Audience:** Mixed
+
+### 🎯 Goal
+Build a playable Sudoku game in the browser with a pre-generated puzzle, input validation, and helper features.
+
+### 🛠️ What Participants Will Build
+- 9×9 Sudoku grid with pre-filled puzzle numbers
+- Input cells for the player to fill in missing numbers
+- Real-time validation highlighting (correct ✅ / incorrect ❌)
+- A "Check Solution" button
+- A "Show Hint" button that reveals one correct cell
+- Timer to track how long the puzzle takes
+
+### 💡 Copilot Prompts to Use
+- *"Build a Sudoku game in HTML and JavaScript with a 9x9 grid and a hardcoded starter puzzle"*
+- *"Highlight cells in red when the player enters an incorrect number and green when correct"*
+- *"Add a Check Solution button that validates the entire board and shows a success message"*
+- *"Add a hint button that reveals one empty cell with the correct answer"*
+- *"Add a timer that starts when the first cell is filled and stops when the puzzle is solved"*
+
+### 🏁 Learning Outcome
+Demonstrate how Copilot tackles grid-based logic, input validation, and multi-feature interactivity — skills that would take hours to research and write manually.
+
+---
+
+## 🧪 Lab 5 — Interactive Quiz Builder
+**Type:** Learning Tool | **Audience:** All Levels
+
+### 🎯 Goal
+Build a quiz app where participants can define their own questions, run the quiz, and see a results summary.
+
+### 🛠️ What Participants Will Build
+- Question creation form (question + 4 options + correct answer)
+- Quiz playback mode with one question at a time
+- Score tracker and progress indicator
+- End screen with review of wrong answers
+
+### 💡 Copilot Prompts to Use
+- *"Create a quiz app where I can add my own questions with 4 multiple choice answers"*
+- *"Show one question at a time with a next button and track the score"*
+- *"At the end, show which questions were answered incorrectly with the correct answers"*
+
+### 🏁 Learning Outcome
+Show how Copilot manages multi-step application state and dynamic content generation.
+
+---
+
+## 🧪 Lab 6 — Mini Kanban Board
+**Type:** Productivity Tool | **Audience:** All Levels
+
+### 🎯 Goal
+Build a drag-and-drop Kanban board with three columns (To Do, In Progress, Done) to manage tasks visually.
+
+### 🛠️ What Participants Will Build
+- Three-column board layout
+- Add task cards with a title and priority label
+- Drag-and-drop cards between columns
+- Delete task button
+- Task count badge per column
+
+### 💡 Copilot Prompts to Use
+- *"Build a Kanban board with three columns: To Do, In Progress, and Done using HTML and JavaScript"*
+- *"Make the task cards draggable between columns using the HTML drag-and-drop API"*
+- *"Add a priority badge (High, Medium, Low) and a task counter per column"*
+
+### 🏁 Learning Outcome
+Demonstrate how Copilot handles complex browser APIs like drag-and-drop that are notoriously tricky to write manually.
+
+---
+
+## 📋 Workshop Suggestions
+
+| # | Lab | Type | Audience | Key Copilot Skill Shown |
+|---|-----|------|----------|--------------------------|
+| 1 | Habit Tracker | Productivity | All | UI generation from plain English |
+| 2 | Tic-Tac-Toe Game | Game | All | Turn-based logic & AI opponent |
+| 3 | Emoji Memory Game | Game | All | Game state & animations |
+| 4 | Sudoku Game | Game | Mixed | Grid logic & input validation |
+| 5 | Quiz Builder | Learning Tool | All | Multi-step state management |
+| 6 | Kanban Board | Productivity | All | Complex browser APIs |
+
+---
+
+> 💬 **Facilitator Tip:** Encourage participants to describe features in their own words — the more natural the prompt, the better the demonstration of Copilot's power. Mistakes and iterations are part of the learning!

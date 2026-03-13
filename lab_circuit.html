@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibe Coding Workshop</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1f6feb, #388bfd);
+      padding: 28px 40px;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; }
+    header p  { margin-top: 6px; opacity: .85; font-size: .95rem; }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 32px auto;
+      gap: 24px;
+      padding: 0 20px;
+    }
+
+    .sidebar {
+      width: 300px;
+      flex-shrink: 0;
+    }
+    .sidebar h2 {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #8b949e;
+      margin-bottom: 12px;
+    }
+
+    .lab-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .lab-card:hover {
+      border-color: #388bfd;
+      background: #1c2230;
+    }
+    .lab-card.active {
+      border-color: #388bfd;
+      background: #1c2230;
+      box-shadow: 0 0 0 3px rgba(56,139,253,.2);
+    }
+    .lab-card .lab-num {
+      font-size: .7rem;
+      font-weight: 600;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+    .lab-card .lab-title {
+      font-size: .95rem;
+      font-weight: 600;
+      margin: 4px 0 8px;
+    }
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: .65rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .badge.type     { background: #1f3a5f; color: #79c0ff; }
+    .badge.audience { background: #1e3a2a; color: #56d364; }
+    .badge.featured { background: #3a2a0a; color: #e3b341; }
+
+    .main { flex: 1; min-width: 0; }
+
+    .welcome {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 48px 40px;
+      text-align: center;
+    }
+    .welcome .icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .welcome h2 { font-size: 1.5rem; margin-bottom: 10px; }
+    .welcome p  { color: #8b949e; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+
+    .lab-detail { display: none; }
+    .lab-detail.visible { display: block; }
+
+    .detail-header {
+      background: linear-gradient(135deg, #161b22, #1c2230);
+      border: 1px solid #30363d;
+      border-radius: 12px 12px 0 0;
+      padding: 28px 32px;
+    }
+    .detail-header .lab-label {
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #8b949e;
+      margin-bottom: 6px;
+    }
+    .detail-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-top: none;
+      padding: 24px 32px;
+    }
+    .section:last-child { border-radius: 0 0 12px 12px; }
+    .section h3 {
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #8b949e;
+      margin-bottom: 14px;
+    }
+    .section p, .section ul {
+      color: #c9d1d9;
+      line-height: 1.8;
+    }
+
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #c9d1d9;
+      line-height: 1.5;
+    }
+    .checklist li input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #388bfd;
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .checklist li.checked span {
+      text-decoration: line-through;
+      color: #8b949e;
+    }
+
+    .progress-wrap {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      height: 8px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #388bfd, #56d364);
+      border-radius: 20px;
+      transition: width .4s ease;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: .72rem;
+      color: #8b949e;
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .prompt-list { list-style: none; padding: 0; }
+    .prompt-item {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-left: 3px solid #388bfd;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      font-size: .875rem;
+      color: #79c0ff;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .copy-btn {
+      display: inline-block;
+      margin-top: 8px;
+      font-style: normal;
+      font-size: .7rem;
+      color: #8b949e;
+      background: none;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .copy-btn:hover { color: #e6edf3; border-color: #8b949e; }
+
+    .outcome-box {
+      background: #0d2818;
+      border: 1px solid #2ea043;
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: #aff5b4;
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .timer-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .timer-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #388bfd;
+      font-variant-numeric: tabular-nums;
+      min-width: 52px;
+    }
+    .timer-btn {
+      font-size: .75rem;
+      padding: 5px 14px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #1c2230;
+      color: #c9d1d9;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .timer-btn:hover { background: #2a3547; }
+
+    .tip-box {
+      background: #1c2230;
+      border: 1px dashed #388bfd;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: .85rem;
+      color: #8b949e;
+      line-height: 1.6;
+    }
+    .tip-box strong { color: #79c0ff; }
+
+    @media (max-width: 720px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🧪 Vibe Coding Workshop</h1>
+  <p>GitHub Copilot &times; Web Browser Projects &nbsp;|&nbsp; HTML &middot; CSS &middot; JavaScript</p>
+</header>
+
+<div class="container">
+  <aside class="sidebar">
+    <h2>Lab Exercises</h2>
+    <div id="labList"></div>
+  </aside>
+
+  <main class="main" id="mainPanel">
+    <div class="welcome" id="welcomeScreen">
+      <div class="icon">🚀</div>
+      <h2>Welcome to the Workshop!</h2>
+      <p>Select a lab from the sidebar to get started. Each exercise takes approximately <strong>~20 minutes</strong> and runs entirely in your web browser — no installation required.</p>
+    </div>
+    <div id="labDetail" class="lab-detail"></div>
+  </main>
+</div>
+
+<script>
+  const labs = [
+    {
+      id: 1,
+      emoji: "📋",
+      title: "Personal Habit Tracker",
+      type: "Productivity Tool",
+      audience: "All Levels",
+      featured: false,
+      goal: "Build a daily habit tracker where users can add habits, check them off, and see a simple progress bar.",
+      builds: [
+        "Input field to add new habits",
+        "Checkbox list to mark habits as done",
+        "Visual progress bar showing daily completion %",
+        "A Reset Day button"
+      ],
+      prompts: [
+        "Create an HTML page with a habit tracker that lets me add habits and check them off",
+        "Add a progress bar that updates automatically as habits are checked",
+        "Style this with a clean, modern look using CSS"
+      ],
+      outcome: "Understand how Copilot generates functional UI components from plain English descriptions."
+    },
+    {
+      id: 2,
+      emoji: "🎮",
+      title: "Tic-Tac-Toe Game",
+      type: "Browser Game",
+      audience: "All Levels",
+      featured: true,
+      goal: "Build a fully functional Tic-Tac-Toe game playable in the browser, with two-player mode and an optional simple AI opponent.",
+      builds: [
+        "3x3 interactive game grid",
+        "Two-player turn-based logic (X and O)",
+        "Win detection and draw detection",
+        "Score tracker across multiple rounds",
+        "Optional: Single-player mode with a basic AI opponent"
+      ],
+      prompts: [
+        "Create a Tic-Tac-Toe game in HTML and JavaScript with a 3x3 clickable grid for two players",
+        "Add win detection logic that highlights the winning combination and announces the winner",
+        "Add a scoreboard that tracks wins for X, wins for O, and draws across rounds",
+        "Add a simple AI opponent that plays as O using random available moves"
+      ],
+      outcome: "See how Copilot handles turn-based game logic, win condition algorithms, and optional AI logic from conversational prompts."
+    },
+    {
+      id: 3,
+      emoji: "🃏",
+      title: "Emoji Memory Match Game",
+      type: "Browser Game",
+      audience: "All Levels",
+      featured: false,
+      goal: "Build a classic memory card flip game using emojis as card faces with a move counter and timer.",
+      builds: [
+        "4x4 grid of face-down emoji cards",
+        "Flip animation on click",
+        "Match detection logic",
+        "Move counter and countdown timer",
+        "Win screen with score"
+      ],
+      prompts: [
+        "Create a memory card matching game with emojis in a 4x4 grid using HTML and JavaScript",
+        "Add a flip animation using CSS transitions",
+        "Add a move counter and a 60-second countdown timer"
+      ],
+      outcome: "Experience how Copilot scaffolds game logic, state management, and animations with minimal manual coding."
+    },
+    {
+      id: 4,
+      emoji: "🔢",
+      title: "Sudoku Game",
+      type: "Browser Game",
+      audience: "Mixed",
+      featured: true,
+      goal: "Build a playable Sudoku game in the browser with a pre-generated puzzle, input validation, and helper features.",
+      builds: [
+        "9x9 Sudoku grid with pre-filled puzzle numbers",
+        "Input cells for the player to fill in missing numbers",
+        "Real-time validation highlighting (correct / incorrect)",
+        "A Check Solution button",
+        "A Show Hint button that reveals one correct cell",
+        "Timer to track how long the puzzle takes"
+      ],
+      prompts: [
+        "Build a Sudoku game in HTML and JavaScript with a 9x9 grid and a hardcoded starter puzzle",
+        "Highlight cells in red when the player enters an incorrect number and green when correct",
+        "Add a Check Solution button that validates the entire board and shows a success message",
+        "Add a hint button that reveals one empty cell with the correct answer",
+        "Add a timer that starts when the first cell is filled and stops when the puzzle is solved"
+      ],
+      outcome: "Demonstrate how Copilot tackles grid-based logic, input validation, and multi-feature interactivity — skills that would take hours to research and write manually."
+    },
+    {
+      id: 5,
+      emoji: "❓",
+      title: "Interactive Quiz Builder",
+      type: "Learning Tool",
+      audience: "All Levels",
+      featured: false,
+      goal: "Build a quiz app where participants can define their own questions, run the quiz, and see a results summary.",
+      builds: [
+        "Question creation form (question + 4 options + correct answer)",
+        "Quiz playback mode with one question at a time",
+        "Score tracker and progress indicator",
+        "End screen with review of wrong answers"
+      ],
+      prompts: [
+        "Create a quiz app where I can add my own questions with 4 multiple choice answers",
+        "Show one question at a time with a next button and track the score",
+        "At the end, show which questions were answered incorrectly with the correct answers"
+      ],
+      outcome: "Show how Copilot manages multi-step application state and dynamic content generation."
+    },
+    {
+      id: 6,
+      emoji: "📌",
+      title: "Mini Kanban Board",
+      type: "Productivity Tool",
+      audience: "All Levels",
+      featured: false,
+      goal: "Build a drag-and-drop Kanban board with three columns (To Do, In Progress, Done) to manage tasks visually.",
+      builds: [
+        "Three-column board layout",
+        "Add task cards with a title and priority label",
+        "Drag-and-drop cards between columns",
+        "Delete task button",
+        "Task count badge per column"
+      ],
+      prompts: [
+        "Build a Kanban board with three columns: To Do, In Progress, and Done using HTML and JavaScript",
+        "Make the task cards draggable between columns using the HTML drag-and-drop API",
+        "Add a priority badge (High, Medium, Low) and a task counter per column"
+      ],
+      outcome: "Demonstrate how Copilot handles complex browser APIs like drag-and-drop that are notoriously tricky to write manually."
+    }
+  ];
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let activeLabId  = null;
+  let timerInterval = null;
+  let timerSeconds  = 0;
+  let timerRunning  = false;
+  const checkState  = {};
+
+  // ── Build Sidebar AFTER DOM is ready ──────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    buildSidebar();
+  });
+
+  function buildSidebar() {
+    const labList = document.getElementById('labList');
+    labList.innerHTML = '';
+
+    labs.forEach(function(lab) {
+      const card = document.createElement('div');
+      card.className = 'lab-card';
+      card.id = 'card-' + lab.id;
+
+      const numDiv = document.createElement('div');
+      numDiv.className = 'lab-num';
+      numDiv.textContent = 'Lab ' + lab.id;
+
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'lab-title';
+      titleDiv.textContent = lab.emoji + ' ' + lab.title;
+
+      const badgesDiv = document.createElement('div');
+      badgesDiv.className = 'badges';
+
+      const typeBadge = document.createElement('span');
+      typeBadge.className = 'badge type';
+      typeBadge.textContent = lab.type;
+
+      const audBadge = document.createElement('span');
+      audBadge.className = 'badge audience';
+      audBadge.textContent = lab.audience;
+
+      badgesDiv.appendChild(typeBadge);
+      badgesDiv.appendChild(audBadge);
+
+      if (lab.featured) {
+        const featBadge = document.createElement('span');
+        featBadge.className = 'badge featured';
+        featBadge.textContent = 'Updated';
+        badgesDiv.appendChild(featBadge);
+      }
+
+      card.appendChild(numDiv);
+      card.appendChild(titleDiv);
+      card.appendChild(badgesDiv);
+
+      card.addEventListener('click', function() {
+        selectLab(lab.id);
+      });
+
+      labList.appendChild(card);
+    });
+  }
+
+  // ── Select Lab ─────────────────────────────────────────────────────────────
+  function selectLab(id) {
+    if (activeLabId === id) return;
+    stopTimer();
+    activeLabId = id;
+
+    const lab = labs.find(function(l) { return l.id === id; });
+
+    document.querySelectorAll('.lab-card').forEach(function(c) {
+      c.classList.remove('active');
+    });
+    document.getElementById('card-' + id).classList.add('active');
+
+    document.getElementById('welcomeScreen').style.display = 'none';
+
+    if (!checkState[id]) {
+      checkState[id] = new Array(lab.builds.length).fill(false);
+    }
+
+    const detail = document.getElementById('labDetail');
+    detail.className = 'lab-detail visible';
+    detail.innerHTML = buildDetailHTML(lab);
+
+    // Attach checklist listeners
+    detail.querySelectorAll('.checklist li').forEach(function(li, idx) {
+      const cb = li.querySelector('input[type="checkbox"]');
+      cb.checked = checkState[id][idx];
+      if (cb.checked) li.classList.add('checked');
+
+      cb.addEventListener('change', function() {
+        checkState[id][idx] = cb.checked;
+        if (cb.checked) {
+          li.classList.add('checked');
+        } else {
+          li.classList.remove('checked');
+        }
+        updateProgress(id);
+      });
+
+      li.addEventListener('click', function(e) {
+        if (e.target !== cb) {
+          cb.checked = !cb.checked;
+          cb.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+
+    updateProgress(id);
+
+    // Attach copy buttons
+    detail.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const text = btn.getAttribute('data-text');
+        navigator.clipboard.writeText(text).then(function() {
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = 'Copy prompt'; }, 1500);
+        }).catch(function() {
+          btn.textContent = 'Copy failed';
+        });
+      });
+    });
+
+    // Attach timer buttons
+    const startBtn = detail.querySelector('#timerStart');
+    const pauseBtn = detail.querySelector('#timerPause');
+    const resetBtn = detail.querySelector('#timerReset');
+    if (startBtn) startBtn.addEventListener('click', startTimer);
+    if (pauseBtn) pauseBtn.addEventListener('click', pauseTimer);
+    if (resetBtn) resetBtn.addEventListener('click', resetTimer);
+  }
+
+  // ── Build Detail HTML ──────────────────────────────────────────────────────
+  function buildDetailHTML(lab) {
+    var buildsHTML = '';
+    lab.builds.forEach(function(b, i) {
+      buildsHTML += '<li id="li-' + lab.id + '-' + i + '">' +
+        '<input type="checkbox" id="cb-' + lab.id + '-' + i + '" />' +
+        '<span>' + escapeHTML(b) + '</span>' +
+        '</li>';
+    });
+
+    var promptsHTML = '';
+    lab.prompts.forEach(function(p) {
+      promptsHTML += '<li class="prompt-item">' +
+        '"' + escapeHTML(p) + '"' +
+        '<button class="copy-btn" data-text="' + escapeAttr(p) + '">Copy prompt</button>' +
+        '</li>';
+    });
+
+    return '<div class="detail-header">' +
+        '<div class="lab-label">Lab ' + lab.id + ' &nbsp;&middot;&nbsp; ' + escapeHTML(lab.type) + ' &nbsp;&middot;&nbsp; ' + escapeHTML(lab.audience) + '</div>' +
+        '<h2>' + lab.emoji + ' ' + escapeHTML(lab.title) + '</h2>' +
+        '<div class="badges">' +
+          '<span class="badge type">' + escapeHTML(lab.type) + '</span>' +
+          '<span class="badge audience">' + escapeHTML(lab.audience) + '</span>' +
+          (lab.featured ? '<span class="badge featured">Updated</span>' : '') +
+        '</div>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Goal</h3>' +
+        '<p>' + escapeHTML(lab.goal) + '</p>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>What You Will Build</h3>' +
+        '<ul class="checklist">' + buildsHTML + '</ul>' +
+        '<div class="progress-wrap">' +
+          '<div class="progress-bar" id="progressBar-' + lab.id + '"></div>' +
+        '</div>' +
+        '<div class="progress-label" id="progressLabel-' + lab.id + '">0 / ' + lab.builds.length + ' completed</div>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Copilot Prompts to Use</h3>' +
+        '<ul class="prompt-list">' + promptsHTML + '</ul>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Lab Timer (~20 min)</h3>' +
+        '<div class="timer-row">' +
+          '<span class="timer-display" id="timerDisplay">00:00</span>' +
+          '<button class="timer-btn" id="timerStart">Start</button>' +
+          '<button class="timer-btn" id="timerPause">Pause</button>' +
+          '<button class="timer-btn" id="timerReset">Reset</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Learning Outcome</h3>' +
+        '<div class="outcome-box">' + escapeHTML(lab.outcome) + '</div>' +
+        '<div class="tip-box"><strong>Facilitator Tip:</strong> Encourage participants to describe features in their own words — the more natural the prompt, the better the demonstration of Copilot\'s power. Mistakes and iterations are part of the learning!</div>' +
+      '</div>';
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function escapeAttr(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ── Progress ───────────────────────────────────────────────────────────────
+  function updateProgress(id) {
+    const lab    = labs.find(function(l) { return l.id === id; });
+    const states = checkState[id];
+    const done   = states.filter(Boolean).length;
+    const total  = lab.builds.length;
+    const pct    = Math.round((done / total) * 100);
+
+    const bar   = document.getElementById('progressBar-' + id);
+    const label = document.getElementById('progressLabel-' + id);
+    if (bar)   bar.style.width   = pct + '%';
+    if (label) label.textContent = done + ' / ' + total + ' completed';
+  }
+
+  // ── Timer ──────────────────────────────────────────────────────────────────
+  function formatTime(s) {
+    var m   = String(Math.floor(s / 60)).padStart(2, '0');
+    var sec = String(s % 60).padStart(2, '0');
+    return m + ':' + sec;
+  }
+
+  function updateTimerDisplay() {
+    var el = document.getElementById('timerDisplay');
+    if (el) el.textContent = formatTime(timerSeconds);
+  }
+
+  function startTimer() {
+    if (timerRunning) return;
+    timerRunning = true;
+    timerInterval = setInterval(function() {
+      timerSeconds++;
+      updateTimerDisplay();
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    timerRunning = false;
+    clearInterval(timerInterval);
+  }
+
+  function resetTimer() {
+    pauseTimer();
+    timerSeconds = 0;
+    updateTimerDisplay();
+  }
+
+  function stopTimer() {
+    pauseTimer();
+    timerSeconds = 0;
+  }
+
+</script>
+</body>
+</html>
