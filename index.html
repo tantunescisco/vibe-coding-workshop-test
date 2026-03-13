@@ -369,6 +369,7 @@
             <!-- Home button to return to overview page -->
             <div class="home-button" onclick="showWelcome()">🏠 Workshop Overview</div>
             
+            <!-- PRODUCTIVITY TOOLS -->
             <!-- Lab 1: Habit Tracker -->
             <div class="lab-item" data-lab="1">
                 <div class="lab-number">✅ Lab 1</div>
@@ -376,6 +377,22 @@
                 <div class="lab-meta">Productivity Tool • All Levels</div>
             </div>
 
+            <!-- Lab 6: Kanban Board -->
+            <div class="lab-item" data-lab="6">
+                <div class="lab-number">📋 Lab 6</div>
+                <div class="lab-title">Mini Kanban Board</div>
+                <div class="lab-meta">Productivity Tool • All Levels</div>
+            </div>
+
+            <!-- LEARNING TOOLS -->
+            <!-- Lab 5: Quiz Builder -->
+            <div class="lab-item" data-lab="5">
+                <div class="lab-number">❓ Lab 5</div>
+                <div class="lab-title">Interactive Quiz Builder</div>
+                <div class="lab-meta">Learning Tool • All Levels</div>
+            </div>
+
+            <!-- GAMES -->
             <!-- Lab 2: Tic-Tac-Toe Game -->
             <div class="lab-item" data-lab="2">
                 <div class="lab-number">⭕ Lab 2</div>
@@ -395,20 +412,6 @@
                 <div class="lab-number">🧩 Lab 4</div>
                 <div class="lab-title">Sudoku Game</div>
                 <div class="lab-meta">Browser Game • Mixed</div>
-            </div>
-
-            <!-- Lab 5: Quiz Builder -->
-            <div class="lab-item" data-lab="5">
-                <div class="lab-number">❓ Lab 5</div>
-                <div class="lab-title">Interactive Quiz Builder</div>
-                <div class="lab-meta">Learning Tool • All Levels</div>
-            </div>
-
-            <!-- Lab 6: Kanban Board -->
-            <div class="lab-item" data-lab="6">
-                <div class="lab-number">📋 Lab 6</div>
-                <div class="lab-title">Mini Kanban Board</div>
-                <div class="lab-meta">Productivity Tool • All Levels</div>
             </div>
         </div>
 
@@ -630,6 +633,20 @@
                             <td>All Levels</td>
                             <td>UI generation from plain English</td>
                         </tr>
+                        <tr onclick="displayLab(6)">
+                            <td>6</td>
+                            <td><span class="table-lab-name">📋 Mini Kanban Board</span></td>
+                            <td><span class="table-badge productivity">Productivity</span></td>
+                            <td>All Levels</td>
+                            <td>Complex browser APIs</td>
+                        </tr>
+                        <tr onclick="displayLab(5)">
+                            <td>5</td>
+                            <td><span class="table-lab-name">❓ Interactive Quiz Builder</span></td>
+                            <td><span class="table-badge learning">Learning Tool</span></td>
+                            <td>All Levels</td>
+                            <td>Multi-step state management</td>
+                        </tr>
                         <tr onclick="displayLab(2)">
                             <td>2</td>
                             <td><span class="table-lab-name">⭕ Tic-Tac-Toe Game</span></td>
@@ -650,20 +667,6 @@
                             <td><span class="table-badge game">Game</span></td>
                             <td>Mixed</td>
                             <td>Grid logic & input validation</td>
-                        </tr>
-                        <tr onclick="displayLab(5)">
-                            <td>5</td>
-                            <td><span class="table-lab-name">❓ Interactive Quiz Builder</span></td>
-                            <td><span class="table-badge learning">Learning Tool</span></td>
-                            <td>All Levels</td>
-                            <td>Multi-step state management</td>
-                        </tr>
-                        <tr onclick="displayLab(6)">
-                            <td>6</td>
-                            <td><span class="table-lab-name">📋 Mini Kanban Board</span></td>
-                            <td><span class="table-badge productivity">Productivity</span></td>
-                            <td>All Levels</td>
-                            <td>Complex browser APIs</td>
                         </tr>
                     </tbody>
                 </table>
