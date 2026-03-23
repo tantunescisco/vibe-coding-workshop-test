@@ -4,7 +4,7 @@ An interactive HTML application for the **Vibe Coding Workshop** featuring 6 han
 
 ## 🌐 Live Demo
 
-Visit the workshop: [https://tantunes_cisco.github.io/vibe-coding-workshop/](https://tantunes_cisco.github.io/vibe-coding-workshop/)
+Visit the workshop: [https://tantunescisco.github.io/vibe-coding-workshop-test/](https://tantunescisco.github.io/vibe-coding-workshop-test/)
 
 ## 📋 Workshop Labs
 
