@@ -5,7 +5,7 @@
 
 ## Workshop Overview
 
-Each lab is designed to take **~10 minutes**, runs entirely in the **web browser**, and demonstrates how GitHub Copilot accelerates development for both technical and non-technical participants. All examples use **HTML, CSS, and JavaScript** — no installation required beyond a code editor with Copilot enabled.
+Each lab is designed to take **~10 minutes**, runs entirely in the **web browser**, and demonstrates how CircuIT or GitHub Copilot accelerates development for both technical and non-technical participants. All examples use **HTML, CSS, and JavaScript** — no installation required beyond a code editor with Copilot enabled.
 
 ---
 
@@ -162,4 +162,4 @@ Demonstrate how Copilot handles complex browser APIs like drag-and-drop that are
 
 ---
 
-> 💬 **Facilitator Tip:** Encourage participants to describe features in their own words — the more natural the prompt, the better the demonstration of Copilot's power. Mistakes and iterations are part of the learning!
+> 💬 **Facilitator Tip:** Describe features in your own words — the more natural the prompt, the better the demonstration of Copilot's power. Mistakes and iterations are part of the learning!

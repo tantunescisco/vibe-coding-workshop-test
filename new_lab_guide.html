@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibe Coding Workshop - Lab Guide</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d1117;
+      color: #e6edf3;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1f6feb, #388bfd);
+      padding: 28px 40px;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; }
+    header p  { margin-top: 6px; opacity: .85; font-size: .95rem; }
+
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 32px auto;
+      gap: 24px;
+      padding: 0 20px;
+    }
+
+    .sidebar {
+      width: 300px;
+      flex-shrink: 0;
+    }
+    .sidebar h2 {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #8b949e;
+      margin-bottom: 12px;
+    }
+
+    .lab-card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .lab-card:hover {
+      border-color: #388bfd;
+      background: #1c2230;
+    }
+    .lab-card.active {
+      border-color: #388bfd;
+      background: #1c2230;
+      box-shadow: 0 0 0 3px rgba(56,139,253,.2);
+    }
+    .lab-card .lab-num {
+      font-size: .7rem;
+      font-weight: 600;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+    .lab-card .lab-title {
+      font-size: .95rem;
+      font-weight: 600;
+      margin: 4px 0 8px;
+    }
+    .badges {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: .65rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .badge.type     { background: #1f3a5f; color: #79c0ff; }
+    .badge.audience { background: #1e3a2a; color: #56d364; }
+
+    .main { flex: 1; min-width: 0; }
+
+    .welcome {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 48px 40px;
+      text-align: center;
+    }
+    .welcome .icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .welcome h2 { font-size: 1.5rem; margin-bottom: 10px; }
+    .welcome p  { color: #8b949e; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+
+    .lab-detail { display: none; }
+    .lab-detail.visible { display: block; }
+
+    .detail-header {
+      background: linear-gradient(135deg, #161b22, #1c2230);
+      border: 1px solid #30363d;
+      border-radius: 12px 12px 0 0;
+      padding: 28px 32px;
+    }
+    .detail-header .lab-label {
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: #8b949e;
+      margin-bottom: 6px;
+    }
+    .detail-header h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-top: none;
+      padding: 24px 32px;
+    }
+    .section:last-child { border-radius: 0 0 12px 12px; }
+    .section h3 {
+      font-size: .85rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #8b949e;
+      margin-bottom: 14px;
+    }
+    .section p, .section ul {
+      color: #c9d1d9;
+      line-height: 1.8;
+    }
+
+    .checklist { list-style: none; padding: 0; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #c9d1d9;
+      line-height: 1.5;
+    }
+    .checklist li input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #388bfd;
+      margin-top: 2px;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .checklist li.checked span {
+      text-decoration: line-through;
+      color: #8b949e;
+    }
+
+    .progress-wrap {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 20px;
+      height: 8px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #388bfd, #56d364);
+      border-radius: 20px;
+      transition: width .4s ease;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: .72rem;
+      color: #8b949e;
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .prompt-list { list-style: none; padding: 0; }
+    .prompt-item {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-left: 3px solid #388bfd;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      font-size: .875rem;
+      color: #79c0ff;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .copy-btn {
+      display: inline-block;
+      margin-top: 8px;
+      font-style: normal;
+      font-size: .7rem;
+      color: #8b949e;
+      background: none;
+      border: 1px solid #30363d;
+      border-radius: 4px;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .copy-btn:hover { color: #e6edf3; border-color: #8b949e; }
+
+    .outcome-box {
+      background: #0d2818;
+      border: 1px solid #2ea043;
+      border-radius: 8px;
+      padding: 14px 18px;
+      color: #aff5b4;
+      font-size: .9rem;
+      line-height: 1.6;
+    }
+
+    .timer-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .timer-display {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #388bfd;
+      font-variant-numeric: tabular-nums;
+      min-width: 52px;
+    }
+    .timer-btn {
+      font-size: .75rem;
+      padding: 5px 14px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #1c2230;
+      color: #c9d1d9;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .timer-btn:hover { background: #2a3547; }
+
+    .tip-box {
+      background: #1c2230;
+      border: 1px dashed #388bfd;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 20px;
+      font-size: .85rem;
+      color: #8b949e;
+      line-height: 1.6;
+    }
+    .tip-box strong { color: #79c0ff; }
+
+    @media (max-width: 720px) {
+      .container { flex-direction: column; }
+      .sidebar { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🧪 Vibe Coding Workshop</h1>
+  <p>Circuit and GitHub Copilot × Web Browser Projects | Lisbon | March 24, 2026</p>
+</header>
+
+<div class="container">
+  <aside class="sidebar">
+    <h2>Lab Exercises</h2>
+    <div id="labList"></div>
+  </aside>
+
+  <main class="main" id="mainPanel">
+    <div class="welcome" id="welcomeScreen">
+      <div class="icon">💡</div>
+      <h2>Welcome to the Workshop!</h2>
+      <p>This workshop is designed for both technical and non-technical participants. No installations are required. All you need is a web browser and your curiosity. Each lab takes approximately <strong>10 minutes</strong> to complete. Select a lab from the sidebar to get started.</p>
+    </div>
+    <div id="labDetail" class="lab-detail"></div>
+  </main>
+</div>
+
+<script>
+  const labs = [
+    {
+      id: 1,
+      emoji: "📋",
+      title: "Personal Habit Tracker",
+      type: "Productivity Tool",
+      audience: "Beginner",
+      goal: "Build a simple, interactive habit tracker that runs in the browser, allowing users to log and monitor their daily habits with visual progress feedback.",
+      builds: [
+        "A form to add new habits with a name and daily goal",
+        "Checkboxes to mark habits as complete for the day",
+        "A progress bar showing how many habits have been completed",
+        "A streak counter that tracks how many days in a row a habit has been completed",
+        "A reset button to clear the day's completions and start fresh"
+      ],
+      prompts: [
+        "Create a habit tracker web app using HTML, CSS, and JavaScript where I can add habits, check them off daily, and see a progress bar.",
+        "Add a streak counter to each habit that increases by one every time I mark it complete on consecutive days.",
+        "Make the habit tracker look clean and modern with a card layout and a calming color scheme.",
+        "Add a reset button that clears today's completed habits but keeps my habit list intact.",
+        "Show a congratulations message when all habits for the day are completed."
+      ],
+      outcome: "Participants learn how to use natural language prompts with Circuit and GitHub Copilot to scaffold a fully functional, stateful web application without writing a single line of code manually."
+    },
+    {
+      id: 2,
+      emoji: "🎮",
+      title: "Tic-Tac-Toe Game",
+      type: "Browser Game",
+      audience: "Beginner",
+      goal: "Build a classic two-player Tic-Tac-Toe game that runs entirely in the browser, complete with win detection, score tracking, and the ability to restart the game.",
+      builds: [
+        "A 3×3 game board rendered using HTML and CSS Grid",
+        "Turn-based logic that alternates between Player X and Player O",
+        "Win detection that highlights the winning combination",
+        "A scoreboard that tracks wins for each player across multiple rounds",
+        "A restart button to reset the board without losing the score"
+      ],
+      prompts: [
+        "Build a two-player Tic-Tac-Toe game in HTML, CSS, and JavaScript with a clean 3x3 grid layout.",
+        "Add logic to detect when a player has won and highlight the winning row, column, or diagonal.",
+        "Add a scoreboard that keeps track of how many times X and O have each won.",
+        "Show a message when the game is a draw and no moves are left.",
+        "Style the game to look fun and colorful with a restart button below the board."
+      ],
+      outcome: "Participants discover how GitHub Copilot can generate game logic and DOM manipulation code from plain English descriptions, demonstrating how even complex conditional logic can be prompted conversationally."
+    },
+    {
+      id: 3,
+      emoji: "🃏",
+      title: "Emoji Memory Match Game",
+      type: "Browser Game",
+      audience: "Beginner to Intermediate",
+      goal: "Build a card-flipping memory match game using emoji pairs, where players flip cards to find matching pairs and the game tracks their moves and time.",
+      builds: [
+        "A grid of face-down cards each hiding an emoji, arranged in pairs",
+        "Flip animation when a card is clicked, revealing the emoji underneath",
+        "Match detection logic that locks matched pairs and hides unmatched cards",
+        "A move counter that increments each time the player flips two cards",
+        "A timer that tracks how long the player takes to complete the board"
+      ],
+      prompts: [
+        "Create an emoji memory match game in HTML and JavaScript with a 4x4 grid of cards that flip when clicked.",
+        "Add a smooth CSS flip animation when a card is turned over.",
+        "Add logic so that when two flipped cards don't match, they flip back face-down after a short delay.",
+        "Add a move counter and a timer that starts when the first card is flipped.",
+        "Show a congratulations popup with the number of moves and time taken when all pairs are matched."
+      ],
+      outcome: "Participants experience how Circuit and GitHub Copilot can help implement animations and timing logic through iterative prompting, showing the power of building features step-by-step in conversation."
+    },
+    {
+      id: 4,
+      emoji: "🔢",
+      title: "Sudoku Game",
+      type: "Browser Game",
+      audience: "Intermediate",
+      goal: "Build a playable Sudoku puzzle game in the browser with a pre-filled puzzle grid, input validation, and a solution checker that gives the player feedback.",
+      builds: [
+        "A 9×9 Sudoku grid rendered in HTML with pre-filled numbers from a sample puzzle",
+        "Editable input cells for empty squares, styled differently from pre-filled cells",
+        "Validation highlighting that marks incorrect entries in red as the player types",
+        "A 'Check Solution' button that tells the player if the board is correctly completed",
+        "A 'Reset Puzzle' button that clears all player entries and restores the original puzzle"
+      ],
+      prompts: [
+        "Create a Sudoku game in HTML, CSS, and JavaScript with a 9x9 grid that has a pre-filled puzzle.",
+        "Style the grid so that the 3x3 sub-boxes are clearly visible with thicker borders.",
+        "Add input validation that highlights a cell in red if the number entered is not valid for that row, column, or box.",
+        "Add a Check Solution button that alerts the player whether they have solved the puzzle correctly.",
+        "Make the pre-filled cells non-editable and style them differently from the blank cells the player fills in."
+      ],
+      outcome: "Participants learn how to use GitHub Copilot to handle complex grid logic and validation rules by describing the desired behavior in plain language, without needing to plan the algorithm themselves upfront."
+    },
+    {
+      id: 5,
+      emoji: "❓",
+      title: "Interactive Quiz Builder",
+      type: "Learning Tool",
+      audience: "Beginner to Intermediate",
+      goal: "Build a browser-based quiz tool where participants can create their own multiple-choice questions, run the quiz, and see a scored results summary at the end.",
+      builds: [
+        "A question builder form where users can enter a question, four answer options, and mark the correct answer",
+        "A quiz player view that displays questions one at a time with clickable answer buttons",
+        "Immediate feedback highlighting correct and incorrect answers after each selection",
+        "A progress indicator showing which question the player is currently on",
+        "A results screen showing the final score and a summary of correct vs. incorrect answers"
+      ],
+      prompts: [
+        "Build an interactive quiz builder in HTML and JavaScript where I can add my own questions and multiple-choice answers.",
+        "Add a quiz player that shows one question at a time and highlights the correct answer in green when I click.",
+        "Show a progress bar or indicator at the top that shows how far through the quiz the player is.",
+        "At the end of the quiz, show a results screen with the final score and which questions were answered incorrectly.",
+        "Add a restart button on the results screen that takes the player back to the first question."
+      ],
+      outcome: "Participants see how Circuit and GitHub Copilot can help build dynamic, data-driven interfaces by prompting for both the data entry experience and the playback experience separately, then combining them."
+    },
+    {
+      id: 6,
+      emoji: "📌",
+      title: "Mini Kanban Board",
+      type: "Productivity Tool",
+      audience: "Intermediate",
+      goal: "Build a lightweight, drag-and-drop Kanban board in the browser with three columns — To Do, In Progress, and Done — where tasks can be created and moved between columns.",
+      builds: [
+        "Three Kanban columns: To Do, In Progress, and Done, displayed side-by-side",
+        "A form to add new task cards with a title and optional description",
+        "Drag-and-drop functionality allowing cards to be moved between columns",
+        "A task counter badge on each column header showing how many cards it contains",
+        "A delete button on each card to remove it from the board entirely"
+      ],
+      prompts: [
+        "Create a Kanban board in HTML, CSS, and JavaScript with three columns: To Do, In Progress, and Done.",
+        "Add a form at the top to create a new task card with a title and short description, and add it to the To Do column.",
+        "Make the task cards draggable so I can move them between columns using drag and drop.",
+        "Add a number badge to each column header that updates automatically to show how many cards are in that column.",
+        "Add a small delete button on each card that removes it from the board when clicked."
+      ],
+      outcome: "Participants learn how GitHub Copilot can implement advanced browser APIs like Drag and Drop simply by describing the desired user interaction, removing the need to look up API documentation manually."
+    }
+  ];
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let activeLabId  = null;
+  let timerInterval = null;
+  let timerSeconds  = 0;
+  let timerRunning  = false;
+  const checkState  = {};
+
+  // ── Build Sidebar AFTER DOM is ready ──────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    buildSidebar();
+  });
+
+  function buildSidebar() {
+    const labList = document.getElementById('labList');
+    labList.innerHTML = '';
+
+    labs.forEach(function(lab) {
+      const card = document.createElement('div');
+      card.className = 'lab-card';
+      card.id = 'card-' + lab.id;
+
+      const numDiv = document.createElement('div');
+      numDiv.className = 'lab-num';
+      numDiv.textContent = 'Lab ' + lab.id;
+
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'lab-title';
+      titleDiv.textContent = lab.emoji + ' ' + lab.title;
+
+      const badgesDiv = document.createElement('div');
+      badgesDiv.className = 'badges';
+
+      const typeBadge = document.createElement('span');
+      typeBadge.className = 'badge type';
+      typeBadge.textContent = lab.type;
+
+      const audBadge = document.createElement('span');
+      audBadge.className = 'badge audience';
+      audBadge.textContent = lab.audience;
+
+      badgesDiv.appendChild(typeBadge);
+      badgesDiv.appendChild(audBadge);
+
+      card.appendChild(numDiv);
+      card.appendChild(titleDiv);
+      card.appendChild(badgesDiv);
+
+      card.addEventListener('click', function() {
+        selectLab(lab.id);
+      });
+
+      labList.appendChild(card);
+    });
+  }
+
+  // ── Select Lab ─────────────────────────────────────────────────────────────
+  function selectLab(id) {
+    if (activeLabId === id) return;
+    stopTimer();
+    activeLabId = id;
+
+    const lab = labs.find(function(l) { return l.id === id; });
+
+    document.querySelectorAll('.lab-card').forEach(function(c) {
+      c.classList.remove('active');
+    });
+    document.getElementById('card-' + id).classList.add('active');
+
+    document.getElementById('welcomeScreen').style.display = 'none';
+
+    if (!checkState[id]) {
+      checkState[id] = new Array(lab.builds.length).fill(false);
+    }
+
+    const detail = document.getElementById('labDetail');
+    detail.className = 'lab-detail visible';
+    detail.innerHTML = buildDetailHTML(lab);
+
+    // Attach checklist listeners
+    detail.querySelectorAll('.checklist li').forEach(function(li, idx) {
+      const cb = li.querySelector('input[type="checkbox"]');
+      cb.checked = checkState[id][idx];
+      if (cb.checked) li.classList.add('checked');
+
+      cb.addEventListener('change', function() {
+        checkState[id][idx] = cb.checked;
+        if (cb.checked) {
+          li.classList.add('checked');
+        } else {
+          li.classList.remove('checked');
+        }
+        updateProgress(id);
+      });
+
+      li.addEventListener('click', function(e) {
+        if (e.target !== cb) {
+          cb.checked = !cb.checked;
+          cb.dispatchEvent(new Event('change'));
+        }
+      });
+    });
+
+    updateProgress(id);
+
+    // Attach copy buttons
+    detail.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const text = btn.getAttribute('data-text');
+        navigator.clipboard.writeText(text).then(function() {
+          btn.textContent = 'Copied!';
+          setTimeout(function() { btn.textContent = 'Copy prompt'; }, 1500);
+        }).catch(function() {
+          btn.textContent = 'Copy failed';
+        });
+      });
+    });
+
+    // Attach timer buttons
+    const startBtn = detail.querySelector('#timerStart');
+    const pauseBtn = detail.querySelector('#timerPause');
+    const resetBtn = detail.querySelector('#timerReset');
+    if (startBtn) startBtn.addEventListener('click', startTimer);
+    if (pauseBtn) pauseBtn.addEventListener('click', pauseTimer);
+    if (resetBtn) resetBtn.addEventListener('click', resetTimer);
+  }
+
+  // ── Build Detail HTML ──────────────────────────────────────────────────────
+  function buildDetailHTML(lab) {
+    var buildsHTML = '';
+    lab.builds.forEach(function(b, i) {
+      buildsHTML += '<li id="li-' + lab.id + '-' + i + '">' +
+        '<input type="checkbox" id="cb-' + lab.id + '-' + i + '" />' +
+        '<span>' + escapeHTML(b) + '</span>' +
+        '</li>';
+    });
+
+    var promptsHTML = '';
+    lab.prompts.forEach(function(p) {
+      promptsHTML += '<li class="prompt-item">' +
+        '"' + escapeHTML(p) + '"' +
+        '<button class="copy-btn" data-text="' + escapeAttr(p) + '">Copy prompt</button>' +
+        '</li>';
+    });
+
+    return '<div class="detail-header">' +
+        '<div class="lab-label">Lab ' + lab.id + ' &nbsp;&middot;&nbsp; ' + escapeHTML(lab.type) + ' &nbsp;&middot;&nbsp; ' + escapeHTML(lab.audience) + '</div>' +
+        '<h2>' + lab.emoji + ' ' + escapeHTML(lab.title) + '</h2>' +
+        '<div class="badges">' +
+          '<span class="badge type">' + escapeHTML(lab.type) + '</span>' +
+          '<span class="badge audience">' + escapeHTML(lab.audience) + '</span>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Goal</h3>' +
+        '<p>' + escapeHTML(lab.goal) + '</p>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>What You Will Build</h3>' +
+        '<ul class="checklist">' + buildsHTML + '</ul>' +
+        '<div class="progress-wrap">' +
+          '<div class="progress-bar" id="progressBar-' + lab.id + '"></div>' +
+        '</div>' +
+        '<div class="progress-label" id="progressLabel-' + lab.id + '">0 / ' + lab.builds.length + ' completed</div>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Copilot Prompts to Use</h3>' +
+        '<ul class="prompt-list">' + promptsHTML + '</ul>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Lab Timer (~10 min)</h3>' +
+        '<div class="timer-row">' +
+          '<span class="timer-display" id="timerDisplay">00:00</span>' +
+          '<button class="timer-btn" id="timerStart">Start</button>' +
+          '<button class="timer-btn" id="timerPause">Pause</button>' +
+          '<button class="timer-btn" id="timerReset">Reset</button>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="section">' +
+        '<h3>Learning Outcome</h3>' +
+        '<div class="outcome-box">' + escapeHTML(lab.outcome) + '</div>' +
+        '<div class="tip-box"><strong>Facilitator Tip:</strong> Encourage participants to speak to Circuit and GitHub Copilot like they would explain the idea to a colleague — not like they are writing code. The most effective prompts are specific about the outcome, not the implementation. Mistakes and iterations are part of the learning!</div>' +
+      '</div>';
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function escapeAttr(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ── Progress ───────────────────────────────────────────────────────────────
+  function updateProgress(id) {
+    const lab    = labs.find(function(l) { return l.id === id; });
+    const states = checkState[id];
+    const done   = states.filter(Boolean).length;
+    const total  = lab.builds.length;
+    const pct    = Math.round((done / total) * 100);
+
+    const bar   = document.getElementById('progressBar-' + id);
+    const label = document.getElementById('progressLabel-' + id);
+    if (bar)   bar.style.width   = pct + '%';
+    if (label) label.textContent = done + ' / ' + total + ' completed';
+  }
+
+  // ── Timer ──────────────────────────────────────────────────────────────────
+  function formatTime(s) {
+    var m   = String(Math.floor(s / 60)).padStart(2, '0');
+    var sec = String(s % 60).padStart(2, '0');
+    return m + ':' + sec;
+  }
+
+  function updateTimerDisplay() {
+    var el = document.getElementById('timerDisplay');
+    if (el) el.textContent = formatTime(timerSeconds);
+  }
+
+  function startTimer() {
+    if (timerRunning) return;
+    timerRunning = true;
+    timerInterval = setInterval(function() {
+      timerSeconds++;
+      updateTimerDisplay();
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    timerRunning = false;
+    clearInterval(timerInterval);
+  }
+
+  function resetTimer() {
+    pauseTimer();
+    timerSeconds = 0;
+    updateTimerDisplay();
+  }
+
+  function stopTimer() {
+    pauseTimer();
+    timerSeconds = 0;
+  }
+
+</script>
+</body>
+</html>

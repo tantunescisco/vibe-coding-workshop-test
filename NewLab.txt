@@ -1,0 +1,250 @@
+# Vibe Coding Workshop — Lab Exercises
+### Circuit and GitHub Copilot × Web Browser Projects | Lisbon | March 24, 2026
+
+---
+
+> 💡 **Welcome!** This workshop is designed for both technical and non-technical participants. No installations are required. All you need is a web browser and your curiosity. Each lab takes approximately **10 minutes** to complete.
+
+---
+
+## 📋 Workshop Rules
+
+- ⏱️ Each lab takes approximately **10 minutes** to complete
+- 🌐 All projects run **entirely in the web browser** — nothing to install
+- 💻 All examples use **HTML, CSS, and JavaScript only**
+- 🤖 Each lab includes **example prompts** you can use with Circuit and GitHub Copilot
+- 🗣️ Speak naturally — write prompts as if you're explaining the idea to a colleague
+
+---
+
+## 🧪 Lab 1 — Personal Habit Tracker
+
+| Field | Details |
+|---|---|
+| **Type** | Productivity Tool |
+| **Audience Level** | Beginner — suitable for all participants |
+
+### 🎯 Goal
+Build a simple, interactive habit tracker that runs in the browser, allowing users to log and monitor their daily habits with visual progress feedback.
+
+### 🔨 What Participants Will Build
+- A form to **add new habits** with a name and daily goal
+- **Checkboxes** to mark habits as complete for the day
+- A **progress bar** showing how many habits have been completed
+- A **streak counter** that tracks how many days in a row a habit has been completed
+- A **reset button** to clear the day's completions and start fresh
+
+### 🤖 Copilot Prompts to Use
+
+*"Create a habit tracker web app using HTML, CSS, and JavaScript where I can add habits, check them off daily, and see a progress bar."*
+
+*"Add a streak counter to each habit that increases by one every time I mark it complete on consecutive days."*
+
+*"Make the habit tracker look clean and modern with a card layout and a calming color scheme."*
+
+*"Add a reset button that clears today's completed habits but keeps my habit list intact."*
+
+*"Show a congratulations message when all habits for the day are completed."*
+
+### 🏆 Learning Outcome
+Participants learn how to use **natural language prompts** with Circuit and GitHub Copilot to scaffold a fully functional, stateful web application without writing a single line of code manually.
+
+---
+
+## 🧪 Lab 2 — Tic-Tac-Toe Game
+
+| Field | Details |
+|---|---|
+| **Type** | Browser Game |
+| **Audience Level** | Beginner — suitable for all participants |
+
+### 🎯 Goal
+Build a classic two-player Tic-Tac-Toe game that runs entirely in the browser, complete with win detection, score tracking, and the ability to restart the game.
+
+### 🔨 What Participants Will Build
+- A **3×3 game board** rendered using HTML and CSS Grid
+- **Turn-based logic** that alternates between Player X and Player O
+- **Win detection** that highlights the winning combination
+- A **scoreboard** that tracks wins for each player across multiple rounds
+- A **restart button** to reset the board without losing the score
+
+### 🤖 Copilot Prompts to Use
+
+*"Build a two-player Tic-Tac-Toe game in HTML, CSS, and JavaScript with a clean 3x3 grid layout."*
+
+*"Add logic to detect when a player has won and highlight the winning row, column, or diagonal."*
+
+*"Add a scoreboard that keeps track of how many times X and O have each won."*
+
+*"Show a message when the game is a draw and no moves are left."*
+
+*"Style the game to look fun and colorful with a restart button below the board."*
+
+### 🏆 Learning Outcome
+Participants discover how GitHub Copilot can **generate game logic and DOM manipulation code** from plain English descriptions, demonstrating how even complex conditional logic can be prompted conversationally.
+
+---
+
+## 🧪 Lab 3 — Emoji Memory Match Game
+
+| Field | Details |
+|---|---|
+| **Type** | Browser Game |
+| **Audience Level** | Beginner to Intermediate |
+
+### 🎯 Goal
+Build a card-flipping memory match game using emoji pairs, where players flip cards to find matching pairs and the game tracks their moves and time.
+
+### 🔨 What Participants Will Build
+- A **grid of face-down cards** each hiding an emoji, arranged in pairs
+- **Flip animation** when a card is clicked, revealing the emoji underneath
+- **Match detection logic** that locks matched pairs and hides unmatched cards
+- A **move counter** that increments each time the player flips two cards
+- A **timer** that tracks how long the player takes to complete the board
+
+### 🤖 Copilot Prompts to Use
+
+*"Create an emoji memory match game in HTML and JavaScript with a 4x4 grid of cards that flip when clicked."*
+
+*"Add a smooth CSS flip animation when a card is turned over."*
+
+*"Add logic so that when two flipped cards don't match, they flip back face-down after a short delay."*
+
+*"Add a move counter and a timer that starts when the first card is flipped."*
+
+*"Show a congratulations popup with the number of moves and time taken when all pairs are matched."*
+
+### 🏆 Learning Outcome
+Participants experience how Circuit and GitHub Copilot can help **implement animations and timing logic** through iterative prompting, showing the power of building features step-by-step in conversation.
+
+---
+
+## 🧪 Lab 4 — Sudoku Game
+
+| Field | Details |
+|---|---|
+| **Type** | Browser Game |
+| **Audience Level** | Intermediate — some familiarity with logic apps helpful |
+
+### 🎯 Goal
+Build a playable Sudoku puzzle game in the browser with a pre-filled puzzle grid, input validation, and a solution checker that gives the player feedback.
+
+### 🔨 What Participants Will Build
+- A **9×9 Sudoku grid** rendered in HTML with pre-filled numbers from a sample puzzle
+- **Editable input cells** for empty squares, styled differently from pre-filled cells
+- **Validation highlighting** that marks incorrect entries in red as the player types
+- A **"Check Solution" button** that tells the player if the board is correctly completed
+- A **"Reset Puzzle" button** that clears all player entries and restores the original puzzle
+
+### 🤖 Copilot Prompts to Use
+
+*"Create a Sudoku game in HTML, CSS, and JavaScript with a 9x9 grid that has a pre-filled puzzle."*
+
+*"Style the grid so that the 3x3 sub-boxes are clearly visible with thicker borders."*
+
+*"Add input validation that highlights a cell in red if the number entered is not valid for that row, column, or box."*
+
+*"Add a Check Solution button that alerts the player whether they have solved the puzzle correctly."*
+
+*"Make the pre-filled cells non-editable and style them differently from the blank cells the player fills in."*
+
+### 🏆 Learning Outcome
+Participants learn how to use GitHub Copilot to **handle complex grid logic and validation rules** by describing the desired behavior in plain language, without needing to plan the algorithm themselves upfront.
+
+---
+
+## 🧪 Lab 5 — Interactive Quiz Builder
+
+| Field | Details |
+|---|---|
+| **Type** | Learning Tool |
+| **Audience Level** | Beginner to Intermediate |
+
+### 🎯 Goal
+Build a browser-based quiz tool where participants can create their own multiple-choice questions, run the quiz, and see a scored results summary at the end.
+
+### 🔨 What Participants Will Build
+- A **question builder form** where users can enter a question, four answer options, and mark the correct answer
+- A **quiz player view** that displays questions one at a time with clickable answer buttons
+- **Immediate feedback** highlighting correct and incorrect answers after each selection
+- A **progress indicator** showing which question the player is currently on
+- A **results screen** showing the final score and a summary of correct vs. incorrect answers
+
+### 🤖 Copilot Prompts to Use
+
+*"Build an interactive quiz builder in HTML and JavaScript where I can add my own questions and multiple-choice answers."*
+
+*"Add a quiz player that shows one question at a time and highlights the correct answer in green when I click."*
+
+*"Show a progress bar or indicator at the top that shows how far through the quiz the player is."*
+
+*"At the end of the quiz, show a results screen with the final score and which questions were answered incorrectly."*
+
+*"Add a restart button on the results screen that takes the player back to the first question."*
+
+### 🏆 Learning Outcome
+Participants see how Circuit and GitHub Copilot can help **build dynamic, data-driven interfaces** by prompting for both the data entry experience and the playback experience separately, then combining them.
+
+---
+
+## 🧪 Lab 6 — Mini Kanban Board
+
+| Field | Details |
+|---|---|
+| **Type** | Productivity Tool |
+| **Audience Level** | Intermediate — great for project managers and engineers alike |
+
+### 🎯 Goal
+Build a lightweight, drag-and-drop Kanban board in the browser with three columns — To Do, In Progress, and Done — where tasks can be created and moved between columns.
+
+### 🔨 What Participants Will Build
+- **Three Kanban columns**: To Do, In Progress, and Done, displayed side-by-side
+- A **form to add new task cards** with a title and optional description
+- **Drag-and-drop functionality** allowing cards to be moved between columns
+- A **task counter badge** on each column header showing how many cards it contains
+- A **delete button** on each card to remove it from the board entirely
+
+### 🤖 Copilot Prompts to Use
+
+*"Create a Kanban board in HTML, CSS, and JavaScript with three columns: To Do, In Progress, and Done."*
+
+*"Add a form at the top to create a new task card with a title and short description, and add it to the To Do column."*
+
+*"Make the task cards draggable so I can move them between columns using drag and drop."*
+
+*"Add a number badge to each column header that updates automatically to show how many cards are in that column."*
+
+*"Add a small delete button on each card that removes it from the board when clicked."*
+
+### 🏆 Learning Outcome
+Participants learn how GitHub Copilot can **implement advanced browser APIs like Drag and Drop** simply by describing the desired user interaction, removing the need to look up API documentation manually.
+
+---
+
+## 📊 Summary Table
+
+| # | Lab | Type | Audience | Key Copilot Skill Shown |
+|---|---|---|---|---|
+| 1 | Personal Habit Tracker | Productivity Tool | Beginner | Scaffolding stateful apps from natural language |
+| 2 | Tic-Tac-Toe Game | Browser Game | Beginner | Generating game logic and DOM manipulation |
+| 3 | Emoji Memory Match Game | Browser Game | Beginner–Intermediate | Building animations and timing logic iteratively |
+| 4 | Sudoku Game | Browser Game | Intermediate | Handling complex grid validation logic |
+| 5 | Interactive Quiz Builder | Learning Tool | Beginner–Intermediate | Building dynamic, data-driven interfaces |
+| 6 | Mini Kanban Board | Productivity Tool | Intermediate | Implementing advanced browser APIs by description |
+
+---
+
+> ## 💬 Facilitator Tip
+>
+> **Encourage participants to speak to Circuit and GitHub Copilot like they would explain the idea to a colleague — not like they are writing code.**
+>
+> The most effective prompts are **specific about the outcome**, not the implementation. Instead of asking *"write a JavaScript function with an array loop"*, encourage participants to say *"show the cards in a shuffled order every time the game starts."*
+>
+> **Remind participants:**
+> - ✅ It is completely fine to **ask for changes** after seeing the first result
+> - ✅ You can **describe what looks wrong** and ask Copilot to fix it
+> - ✅ Prompts do not need to be technical — **plain English works**
+> - ✅ The best results often come from **iterating in small steps**, not writing one giant prompt
+>
+> *"The goal today is not to become a developer — it is to experience how AI tools remove the barrier between an idea and a working prototype."*
+
